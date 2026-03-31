@@ -1,5 +1,31 @@
 import { useState, useRef } from "react";
 
+/* ── Inline SVG rose logo matching the Magneta brand ── */
+const ROSE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="48" height="48">
+  <rect width="200" height="300" rx="16" fill="#111111"/>
+  <g transform="translate(100,100)">
+    <!-- stem -->
+    <path d="M0 20 Q-2 60 0 120" stroke="#4CAF50" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <!-- left leaf -->
+    <path d="M-4 85 Q-35 65 -40 80 Q-35 95 -4 90Z" fill="#4CAF50"/>
+    <!-- right leaf -->
+    <path d="M4 75 Q35 55 40 70 Q35 85 4 80Z" fill="#4CAF50"/>
+    <!-- outer petals -->
+    <ellipse cx="-18" cy="2" rx="22" ry="30" fill="#c41e3a" transform="rotate(20)"/>
+    <ellipse cx="18" cy="2" rx="22" ry="30" fill="#d32f2f" transform="rotate(-20)"/>
+    <ellipse cx="0" cy="-8" rx="20" ry="28" fill="#e53935"/>
+    <!-- inner petals -->
+    <ellipse cx="-8" cy="-4" rx="14" ry="22" fill="#c41e3a" transform="rotate(10)"/>
+    <ellipse cx="8" cy="-4" rx="14" ry="22" fill="#b71c1c" transform="rotate(-10)"/>
+    <!-- center spiral -->
+    <path d="M0 -10 Q8 -18 4 -8 Q0 0 -4 -8 Q-8 -18 0 -10Z" fill="#8b0000"/>
+    <!-- bottom cup petal -->
+    <ellipse cx="0" cy="14" rx="24" ry="14" fill="#c41e3a"/>
+  </g>
+</svg>`;
+
+const ROSE_DATA_URI = `data:image/svg+xml;base64,${typeof btoa !== "undefined" ? btoa(ROSE_SVG) : ""}`;
+
 const defaultContract = {
   creatorName: "",
   videosPerDay: 2,
@@ -36,25 +62,64 @@ export default function ContractGenerator() {
       <html>
         <head>
           <title>UGC Agreement - ${form.creatorName || "Creator"}</title>
-          <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
           <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             @page { margin: 1in; }
-            body { font-family: 'EB Garamond', Georgia, serif; font-size: 13pt; line-height: 1.7; color: #1a1a1a; padding: 0; }
+            body {
+              font-family: 'Lora', Georgia, 'Times New Roman', serif;
+              font-size: 12pt;
+              line-height: 1.75;
+              color: #1a1a1a;
+              font-weight: 400;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+            }
             .contract-body { max-width: 100%; }
             .logo-block { margin-bottom: 32px; }
-            .logo-img { width: 48px; height: 48px; border-radius: 10px; }
-            .contract-title { font-family: 'DM Sans', sans-serif; font-size: 22pt; font-weight: 600; margin-bottom: 20px; letter-spacing: -0.5px; }
-            .preamble { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0; }
-            .section { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
+            .logo-img { width: 52px; height: 52px; border-radius: 12px; }
+            .contract-title {
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+              font-size: 24pt;
+              font-weight: 700;
+              margin-bottom: 24px;
+              letter-spacing: -0.5px;
+              color: #111;
+            }
+            .preamble {
+              margin-bottom: 28px;
+              padding-bottom: 24px;
+              border-bottom: 1.5px solid #e0e0e0;
+              font-size: 12pt;
+              line-height: 1.8;
+            }
+            .section { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eee; }
             .section:last-of-type { border-bottom: none; }
-            .section-title { font-family: 'DM Sans', sans-serif; font-size: 14pt; font-weight: 600; margin-bottom: 8px; }
-            .section p { margin-bottom: 6px; }
-            .signatures { margin-top: 36px; page-break-inside: avoid; }
-            .sig-block { margin-bottom: 32px; }
-            .sig-label { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 11pt; margin-bottom: 6px; }
-            .sig-line { border-bottom: 1px solid #999; width: 250px; height: 28px; margin: 4px 0; }
-            .sig-detail { font-size: 11pt; color: #555; margin-top: 2px; }
+            .section-title {
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+              font-size: 13pt;
+              font-weight: 700;
+              margin-bottom: 8px;
+              color: #111;
+              letter-spacing: -0.2px;
+            }
+            .section p {
+              margin-bottom: 6px;
+              font-size: 12pt;
+              line-height: 1.75;
+            }
+            .signatures { margin-top: 40px; page-break-inside: avoid; }
+            .sig-block { margin-bottom: 36px; }
+            .sig-label {
+              font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+              font-weight: 700;
+              font-size: 11pt;
+              margin-bottom: 6px;
+              color: #111;
+            }
+            .sig-line { border-bottom: 1px solid #999; width: 260px; height: 28px; margin: 4px 0; }
+            .sig-detail { font-size: 11pt; color: #444; margin-top: 2px; }
+            strong { font-weight: 600; }
           </style>
         </head>
         <body>
@@ -66,35 +131,40 @@ export default function ContractGenerator() {
     setTimeout(() => { printWindow.print(); }, 500);
   };
 
+  /* ── Inline base64 for the rose logo (ensures it works in print) ── */
+  const roseDataUri = ROSE_DATA_URI || "";
+
   return (
     <div style={{
       minHeight: "100vh",
       background: "#faf9f7",
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap');
-        * { box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         input:focus, select:focus { outline: none; border-color: #c41e3a !important; }
       `}</style>
 
-      {/* Header */}
+      {/* ════════ Header Bar ════════ */}
       <div style={{
         borderBottom: "1px solid #e8e6e3",
         background: "#fff",
-        padding: "16px 32px",
+        padding: "14px 32px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 8,
-            background: "#1a1a1a",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: 16,
-          }}>🌹</div>
-          <span style={{ fontWeight: 600, fontSize: 15, color: "#1a1a1a", letterSpacing: -0.3 }}>
+          <img
+            src={roseDataUri}
+            alt="Magneta"
+            style={{ width: 34, height: 34, borderRadius: 8, objectFit: "cover" }}
+          />
+          <span style={{
+            fontWeight: 700, fontSize: 15, color: "#111", letterSpacing: -0.3,
+            fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+          }}>
             Magneta Contract Generator
           </span>
         </div>
@@ -102,31 +172,31 @@ export default function ContractGenerator() {
           <button
             onClick={() => setView("form")}
             style={{
-              padding: "7px 16px", borderRadius: 8, border: "1px solid #e0e0e0",
-              background: view === "form" ? "#1a1a1a" : "#fff",
-              color: view === "form" ? "#fff" : "#666",
-              fontSize: 13, fontWeight: 500, cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              padding: "7px 18px", borderRadius: 8, border: "1px solid #e0e0e0",
+              background: view === "form" ? "#111" : "#fff",
+              color: view === "form" ? "#fff" : "#555",
+              fontSize: 13, fontWeight: 600, cursor: "pointer",
+              fontFamily: "'Inter', sans-serif",
             }}
           >Edit</button>
           <button
             onClick={() => setView("preview")}
             style={{
-              padding: "7px 16px", borderRadius: 8, border: "1px solid #e0e0e0",
-              background: view === "preview" ? "#1a1a1a" : "#fff",
-              color: view === "preview" ? "#fff" : "#666",
-              fontSize: 13, fontWeight: 500, cursor: "pointer",
-              fontFamily: "'DM Sans', sans-serif",
+              padding: "7px 18px", borderRadius: 8, border: "1px solid #e0e0e0",
+              background: view === "preview" ? "#111" : "#fff",
+              color: view === "preview" ? "#fff" : "#555",
+              fontSize: 13, fontWeight: 600, cursor: "pointer",
+              fontFamily: "'Inter', sans-serif",
             }}
           >Preview</button>
           {view === "preview" && (
             <button
               onClick={handlePrint}
               style={{
-                padding: "7px 20px", borderRadius: 8, border: "none",
+                padding: "7px 22px", borderRadius: 8, border: "none",
                 background: "#c41e3a", color: "#fff",
-                fontSize: 13, fontWeight: 600, cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13, fontWeight: 700, cursor: "pointer",
+                fontFamily: "'Inter', sans-serif",
               }}
             >Export PDF</button>
           )}
@@ -135,11 +205,15 @@ export default function ContractGenerator() {
 
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "32px 24px" }}>
 
-        {/* FORM VIEW */}
+        {/* ════════ FORM VIEW ════════ */}
         {view === "form" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             <div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#999", textTransform: "uppercase", letterSpacing: 1, marginBottom: 16 }}>
+              <div style={{
+                fontSize: 11, fontWeight: 700, color: "#999", textTransform: "uppercase",
+                letterSpacing: 1.2, marginBottom: 14,
+                fontFamily: "'Inter', sans-serif",
+              }}>
                 Contract Details
               </div>
               <div style={{
@@ -163,7 +237,11 @@ export default function ContractGenerator() {
             </div>
 
             <div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#999", textTransform: "uppercase", letterSpacing: 1, marginBottom: 16 }}>
+              <div style={{
+                fontSize: 11, fontWeight: 700, color: "#999", textTransform: "uppercase",
+                letterSpacing: 1.2, marginBottom: 14,
+                fontFamily: "'Inter', sans-serif",
+              }}>
                 Legal
               </div>
               <div style={{
@@ -181,12 +259,12 @@ export default function ContractGenerator() {
               background: "#f5f0eb", borderRadius: 12, padding: 20,
               display: "flex", alignItems: "center", gap: 12,
             }}>
-              <span style={{ fontSize: 18 }}>📅</span>
+              <span style={{ fontSize: 18 }}>&#128197;</span>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a" }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#111" }}>
                   Effective Date: {today}
                 </div>
-                <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>
+                <div style={{ fontSize: 12, color: "#888", marginTop: 2, fontWeight: 400 }}>
                   Auto-set to today's date when you generate the contract
                 </div>
               </div>
@@ -196,53 +274,65 @@ export default function ContractGenerator() {
               onClick={() => setView("preview")}
               style={{
                 width: "100%", padding: "14px 0", borderRadius: 10, border: "none",
-                background: "#1a1a1a", color: "#fff",
-                fontSize: 14, fontWeight: 600, cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                background: "#111", color: "#fff",
+                fontSize: 14, fontWeight: 700, cursor: "pointer",
+                fontFamily: "'Inter', sans-serif",
+                letterSpacing: -0.2,
                 opacity: form.creatorName ? 1 : 0.4,
               }}
               disabled={!form.creatorName}
             >
-              Preview Contract →
+              Preview Contract
             </button>
           </div>
         )}
 
-        {/* PREVIEW VIEW */}
+        {/* ════════ PREVIEW VIEW ════════ */}
         {view === "preview" && (
           <div style={{
             background: "#fff", borderRadius: 12, border: "1px solid #e8e6e3",
-            padding: "48px 56px",
-            boxShadow: "0 2px 20px rgba(0,0,0,0.04)",
+            padding: "52px 60px",
+            boxShadow: "0 2px 24px rgba(0,0,0,0.04)",
           }}>
             <div ref={printRef}>
-              <div className="contract-body" style={{ fontFamily: "'EB Garamond', Georgia, serif", color: "#1a1a1a", lineHeight: 1.7 }}>
+              <div className="contract-body" style={{
+                fontFamily: "'Lora', Georgia, 'Times New Roman', serif",
+                color: "#1a1a1a",
+                lineHeight: 1.75,
+                fontSize: 15,
+                fontWeight: 400,
+              }}>
                 {/* Logo */}
                 <div style={{ marginBottom: 28 }}>
-                  <div style={{
-                    width: 48, height: 48, borderRadius: 10, background: "#1a1a1a",
-                    display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22,
-                  }}>🌹</div>
+                  <img
+                    src={roseDataUri}
+                    alt="Magneta"
+                    style={{ width: 52, height: 52, borderRadius: 12 }}
+                  />
                 </div>
 
                 {/* Title */}
                 <div style={{
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 26, fontWeight: 600,
-                  marginBottom: 20, letterSpacing: -0.5, color: "#1a1a1a",
+                  fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+                  fontSize: 28,
+                  fontWeight: 700,
+                  marginBottom: 24,
+                  letterSpacing: -0.5,
+                  color: "#111",
                 }}>
                   UGC Agreement
                 </div>
 
                 {/* Preamble */}
-                <div style={{ marginBottom: 24, paddingBottom: 20, borderBottom: "1px solid #e8e6e3" }}>
-                  <p style={{ fontSize: 15 }}>
-                    This Agreement is entered into on <strong>{today}</strong> ("Effective Date") by and between <strong>Tenacity Labs, LLC</strong> ("Company"), and <strong>{form.creatorName || "[Creator Name]"}</strong> ("Creator").
+                <div style={{ marginBottom: 28, paddingBottom: 24, borderBottom: "1.5px solid #e0e0e0" }}>
+                  <p style={{ fontSize: 15, lineHeight: 1.8 }}>
+                    This Agreement is entered into on <strong style={{ fontWeight: 700 }}>{today}</strong> ("Effective Date") by and between <strong style={{ fontWeight: 700 }}>Tenacity Labs, LLC</strong> ("Company"), and <strong style={{ fontWeight: 700 }}>{form.creatorName || "[Creator Name]"}</strong> ("Creator").
                   </p>
                 </div>
 
                 {/* Sections */}
                 <Section num="1" title="Scope of Work">
-                  <p>Creator shall post {form.videosPerDay} short-form videos per day for {form.campaignDays} consecutive days ("Campaign Period") to branded <strong>TikTok</strong> and <strong>Instagram</strong> accounts dedicated to promoting the Magneta app.</p>
+                  <p>Creator shall post {form.videosPerDay} short-form videos per day for {form.campaignDays} consecutive days ("Campaign Period") to branded <strong style={{ fontWeight: 600 }}>TikTok</strong> and <strong style={{ fontWeight: 600 }}>Instagram</strong> accounts dedicated to promoting the Magneta app.</p>
                 </Section>
 
                 <Section num="2" title="Compensation">
@@ -253,13 +343,13 @@ export default function ContractGenerator() {
                   <p>Creator shall not disclose confidential information about the Company or its products.</p>
                 </Section>
 
-                <Section num="4" title="Malpractice & Authenticity">
+                <Section num="4" title="Malpractice &amp; Authenticity">
                   <p>Creator shall not engage in fraudulent activity (e.g., fake or paid views). If fraud is found, all payments must be refunded within 14 days.</p>
                 </Section>
 
                 <Section num="5" title="Termination">
                   <p>If Creator breaches this Agreement, Company may terminate and request a refund.</p>
-                  <p>If terminated early by the Company, payment shall be prorated based on videos delivered.</p>
+                  <p style={{ marginTop: 4 }}>If terminated early by the Company, payment shall be prorated based on videos delivered.</p>
                 </Section>
 
                 <Section num="6" title="Governing Law">
@@ -283,31 +373,41 @@ export default function ContractGenerator() {
                 </Section>
 
                 {/* Signatures */}
-                <div style={{ marginTop: 40, pageBreakInside: "avoid" }}>
-                  <div style={{ marginBottom: 36 }}>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
+                <div style={{ marginTop: 44, pageBreakInside: "avoid" }}>
+                  <div style={{ marginBottom: 40 }}>
+                    <div style={{
+                      fontFamily: "'Inter', -apple-system, sans-serif",
+                      fontWeight: 700, fontSize: 15, marginBottom: 6, color: "#111",
+                    }}>
                       Tenacity Labs, LLC
                     </div>
-                    <div style={{ fontSize: 14, color: "#555", marginBottom: 8 }}>By: Kelechi Onyeama</div>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
-                      <span style={{ fontSize: 14, color: "#555" }}>Signature:</span>
-                      <div style={{ borderBottom: "1px solid #999", width: 220, height: 24 }}></div>
+                    <div style={{ fontSize: 14, color: "#444", marginBottom: 10, fontFamily: "'Lora', serif" }}>
+                      By: Kelechi Onyeama
                     </div>
-                    <div style={{ fontSize: 14, color: "#555", marginTop: 8 }}>Date: {today}</div>
+                    <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
+                      <span style={{ fontSize: 14, color: "#444", fontFamily: "'Lora', serif" }}>Signature:</span>
+                      <div style={{ borderBottom: "1px solid #999", width: 240, height: 26 }}></div>
+                    </div>
+                    <div style={{ fontSize: 14, color: "#444", marginTop: 10, fontFamily: "'Lora', serif" }}>Date: {today}</div>
                   </div>
 
                   <div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, marginBottom: 4 }}>
+                    <div style={{
+                      fontFamily: "'Inter', -apple-system, sans-serif",
+                      fontWeight: 700, fontSize: 15, marginBottom: 6, color: "#111",
+                    }}>
                       Creator
                     </div>
-                    <div style={{ fontSize: 14, color: "#555", marginBottom: 8 }}>Name: {form.creatorName || "[Creator Name]"}</div>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
-                      <span style={{ fontSize: 14, color: "#555" }}>Signature:</span>
-                      <div style={{ borderBottom: "1px solid #999", width: 220, height: 24 }}></div>
+                    <div style={{ fontSize: 14, color: "#444", marginBottom: 10, fontFamily: "'Lora', serif" }}>
+                      Name: {form.creatorName || "[Creator Name]"}
                     </div>
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: 8, marginTop: 8 }}>
-                      <span style={{ fontSize: 14, color: "#555" }}>Date:</span>
-                      <div style={{ borderBottom: "1px solid #999", width: 220, height: 24 }}></div>
+                    <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
+                      <span style={{ fontSize: 14, color: "#444", fontFamily: "'Lora', serif" }}>Signature:</span>
+                      <div style={{ borderBottom: "1px solid #999", width: 240, height: 26 }}></div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "flex-end", gap: 8, marginTop: 10 }}>
+                      <span style={{ fontSize: 14, color: "#444", fontFamily: "'Lora', serif" }}>Date:</span>
+                      <div style={{ borderBottom: "1px solid #999", width: 240, height: 26 }}></div>
                     </div>
                   </div>
                 </div>
@@ -323,18 +423,25 @@ export default function ContractGenerator() {
 function Section({ num, title, children, last }) {
   return (
     <div style={{
-      marginBottom: 20,
-      paddingBottom: last ? 0 : 16,
-      borderBottom: last ? "none" : "1px solid #f0f0f0",
+      marginBottom: 22,
+      paddingBottom: last ? 0 : 18,
+      borderBottom: last ? "none" : "1px solid #eee",
     }}>
       <div style={{
-        fontFamily: "'DM Sans', sans-serif",
-        fontSize: 16, fontWeight: 600,
-        marginBottom: 8, color: "#1a1a1a",
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+        fontSize: 16,
+        fontWeight: 700,
+        marginBottom: 8,
+        color: "#111",
+        letterSpacing: -0.2,
       }}>
         {num}. {title}
       </div>
-      <div style={{ fontSize: 15 }}>{children}</div>
+      <div style={{
+        fontSize: 15,
+        lineHeight: 1.75,
+        fontFamily: "'Lora', Georgia, 'Times New Roman', serif",
+      }}>{children}</div>
     </div>
   );
 }
@@ -342,12 +449,16 @@ function Section({ num, title, children, last }) {
 function Field({ label, value, onChange, placeholder, type = "text", prefix }) {
   return (
     <div>
-      <div style={{ fontSize: 12, fontWeight: 500, color: "#888", marginBottom: 6 }}>{label}</div>
+      <div style={{
+        fontSize: 12, fontWeight: 600, color: "#777", marginBottom: 6,
+        fontFamily: "'Inter', sans-serif", letterSpacing: 0.1,
+      }}>{label}</div>
       <div style={{ position: "relative" }}>
         {prefix && (
           <span style={{
             position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)",
             fontSize: 14, color: "#999", fontWeight: 500,
+            fontFamily: "'Inter', sans-serif",
           }}>{prefix}</span>
         )}
         <input
@@ -356,10 +467,12 @@ function Field({ label, value, onChange, placeholder, type = "text", prefix }) {
           onChange={(e) => onChange(type === "number" ? Number(e.target.value) : e.target.value)}
           placeholder={placeholder}
           style={{
-            width: "100%", padding: "10px 12px",
-            paddingLeft: prefix ? 24 : 12,
+            width: "100%", padding: "10px 14px",
+            paddingLeft: prefix ? 26 : 14,
             borderRadius: 8, border: "1px solid #e0e0e0",
-            fontSize: 14, fontFamily: "'DM Sans', sans-serif",
+            fontSize: 14,
+            fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+            fontWeight: 400,
             color: "#1a1a1a", background: "#faf9f7",
             transition: "border-color 0.2s",
           }}
