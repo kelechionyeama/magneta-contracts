@@ -28,7 +28,8 @@ const ROSE_DATA_URI = `data:image/svg+xml;base64,${typeof btoa !== "undefined" ?
 
 const defaultContract = {
   creatorName: "",
-  videosPerDay: 2,
+  totalVideos: 40,
+  maxPerDay: 2,
   campaignDays: 30,
   monthlyPay: 2000,
   viewThreshold: "350K",
@@ -221,8 +222,9 @@ export default function ContractGenerator() {
                 padding: 24, display: "flex", flexDirection: "column", gap: 20,
               }}>
                 <Field label="Creator Name" value={form.creatorName} onChange={(v) => update("creatorName", v)} placeholder="e.g. Jake Caringer" />
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                  <Field label="Videos Per Day" value={form.videosPerDay} onChange={(v) => update("videosPerDay", v)} type="number" />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+                  <Field label="Total Videos" value={form.totalVideos} onChange={(v) => update("totalVideos", v)} type="number" />
+                  <Field label="Max Per Day" value={form.maxPerDay} onChange={(v) => update("maxPerDay", v)} type="number" />
                   <Field label="Campaign Days" value={form.campaignDays} onChange={(v) => update("campaignDays", v)} type="number" />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
@@ -332,7 +334,7 @@ export default function ContractGenerator() {
 
                 {/* Sections */}
                 <Section num="1" title="Scope of Work">
-                  <p>Creator shall post {form.videosPerDay} short-form videos per day for {form.campaignDays} consecutive days ("Campaign Period") to branded <strong style={{ fontWeight: 600 }}>TikTok</strong> and <strong style={{ fontWeight: 600 }}>Instagram</strong> accounts dedicated to promoting the Magneta app.</p>
+                  <p>Creator shall deliver a total of {form.totalVideos} short-form videos over a {form.campaignDays}-day Campaign Period, posting no more than {form.maxPerDay} per day, to branded <strong style={{ fontWeight: 600 }}>TikTok</strong> and <strong style={{ fontWeight: 600 }}>Instagram</strong> accounts dedicated to promoting the Magneta app.</p>
                 </Section>
 
                 <Section num="2" title="Compensation">
