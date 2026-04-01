@@ -31,6 +31,7 @@ const defaultContract = {
   totalVideos: 40,
   maxPerDay: 2,
   campaignDays: 30,
+  trialDays: 7,
   monthlyPay: 2000,
   viewThreshold: "350K",
   bonusAmount: 2000,
@@ -227,7 +228,8 @@ export default function ContractGenerator() {
                   <Field label="Max Per Day" value={form.maxPerDay} onChange={(v) => update("maxPerDay", v)} type="number" />
                   <Field label="Campaign Days" value={form.campaignDays} onChange={(v) => update("campaignDays", v)} type="number" />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+                  <Field label="Trial Period (days)" value={form.trialDays} onChange={(v) => update("trialDays", v)} type="number" />
                   <Field label="Monthly Pay (USD)" value={form.monthlyPay} onChange={(v) => update("monthlyPay", v)} type="number" prefix="$" />
                   <Field label="View Threshold" value={form.viewThreshold} onChange={(v) => update("viewThreshold", v)} placeholder="e.g. 350K" />
                 </div>
@@ -338,7 +340,7 @@ export default function ContractGenerator() {
                 </Section>
 
                 <Section num="2" title="Compensation">
-                  <p>Company shall pay Creator ${Number(form.monthlyPay).toLocaleString()} USD monthly for surpassing an accumulated {form.viewThreshold} views and a bonus of ${Number(form.bonusAmount).toLocaleString()} for surpassing {form.bonusThreshold} views.</p>
+                  <p>Creator shall complete a {form.trialDays}-day Trial Period at the start of the Campaign. Upon successful completion of the Trial Period, Creator shall receive ${Number(form.monthlyPay).toLocaleString()} USD per month, inclusive of the Trial Period, paid at the end of each calendar month. All view-based compensation requires surpassing an accumulated {form.viewThreshold} views. Creator shall also receive a bonus of ${Number(form.bonusAmount).toLocaleString()} USD for surpassing {form.bonusThreshold} views.</p>
                 </Section>
 
                 <Section num="3" title="Confidentiality">
