@@ -33,7 +33,7 @@ const defaultContract = {
   campaignDays: 30,
   trialDays: 7,
   monthlyPay: 2000,
-  viewThreshold: "350K",
+  viewThreshold: "",
   bonusAmount: 2000,
   bonusThreshold: "1M",
   nonCompeteMonths: 6,
@@ -231,7 +231,7 @@ export default function ContractGenerator() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
                   <Field label="Trial Period (days)" value={form.trialDays} onChange={(v) => update("trialDays", v)} type="number" />
                   <Field label="Monthly Pay (USD)" value={form.monthlyPay} onChange={(v) => update("monthlyPay", v)} type="number" prefix="$" />
-                  <Field label="View Threshold" value={form.viewThreshold} onChange={(v) => update("viewThreshold", v)} placeholder="e.g. 350K" />
+                  <Field label="View Threshold (optional)" value={form.viewThreshold} onChange={(v) => update("viewThreshold", v)} placeholder="e.g. 350K" />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                   <Field label="Bonus Amount (USD)" value={form.bonusAmount} onChange={(v) => update("bonusAmount", v)} type="number" prefix="$" />
@@ -340,7 +340,7 @@ export default function ContractGenerator() {
                 </Section>
 
                 <Section num="2" title="Compensation">
-                  <p>Creator shall complete a {form.trialDays}-day Trial Period at the start of the Campaign. Upon successful completion of the Trial Period, Creator shall receive ${Number(form.monthlyPay).toLocaleString()} USD per month, inclusive of the Trial Period, paid at the end of each calendar month. All view-based compensation requires surpassing an accumulated {form.viewThreshold} views. Creator shall also receive a bonus of ${Number(form.bonusAmount).toLocaleString()} USD for surpassing {form.bonusThreshold} views.</p>
+                  <p>Creator shall complete a {form.trialDays}-day Trial Period at the start of the Campaign. Upon successful completion of the Trial Period, Creator shall receive ${Number(form.monthlyPay).toLocaleString()} USD per month, inclusive of the Trial Period, paid at the end of each calendar month.{form.viewThreshold ? ` All view-based compensation requires surpassing an accumulated ${form.viewThreshold} views.` : ""} Creator shall also receive a bonus of ${Number(form.bonusAmount).toLocaleString()} USD for surpassing {form.bonusThreshold} views.</p>
                 </Section>
 
                 <Section num="3" title="Confidentiality">
