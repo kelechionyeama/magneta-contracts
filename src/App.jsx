@@ -35,7 +35,7 @@ const defaultContract = {
   monthlyPay: 2000,
   viewThreshold: "",
   bonusAmount: 2000,
-  bonusThreshold: "1M",
+  bonusThreshold: "1.5M",
   nonCompeteMonths: 6,
   governingState: "Texas",
 };
